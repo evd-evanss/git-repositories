@@ -8,21 +8,18 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor() : BaseViewModel<DetailsIntent, DetailsState>() {
 
-    lateinit var urlRepository: String
-
     override fun handle(intent: DetailsIntent) {
         when (intent) {
             is DetailsIntent.LoadData -> handleLoadData(intent.repositoryEntity)
-            is DetailsIntent.OnClickGoToRepository -> handleGoToRepository()
+            is DetailsIntent.OnClickGoToRepository -> handleGoToRepository(intent.url)
         }
     }
 
     private fun handleLoadData(repositoryEntity: RepositoryEntity) {
-        urlRepository = repositoryEntity.url
         _state.value = DetailsState.DisplayData(repositoryEntity)
     }
 
-    private fun handleGoToRepository() {
-        _state.value = DetailsState.OpenRepository(urlRepository)
+    private fun handleGoToRepository(url: String) {
+        _state.value = DetailsState.OpenRepository(url)
     }
 }
