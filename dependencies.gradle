@@ -1,0 +1,92 @@
+ext {
+    //Android
+    appCompatVersion = "1.4.1"
+    coreKtxVersion = "1.7.0"
+    activityKtxVersion = "1.4.0"
+    startupRuntimeVersion = "1.1.1"
+
+    androidDependencies = [
+            appcompat: "androidx.appcompat:appcompat:$appCompatVersion",
+            coreKtx: "androidx.core:core-ktx:$coreKtxVersion",
+            activityKtx: "androidx.activity:activity-ktx:$activityKtxVersion",
+            startupRuntime: "androidx.startup:startup-runtime:$startupRuntimeVersion"
+    ]
+
+    //Ui
+    materialVersion = "1.5.0"
+    constraintLayoutVersion = "2.1.3"
+    androidVeilVersion = "1.1.1"
+    glideVersion = "4.13.0"
+
+    uiDependencies = [
+            design: "com.google.android.material:material:$materialVersion",
+            constraintLayout: "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion",
+            shimmer: "com.github.skydoves:androidveil:$androidVeilVersion",
+            glide: "com.github.bumptech.glide:glide:$glideVersion",
+            glideCompiler: "com.github.bumptech.glide:compiler:$glideVersion"
+    ]
+
+    playServicesVersion = "18.0.0"
+    googlePlayServicesDependencies = [
+            basement: "com.google.android.gms:play-services-basement:$playServicesVersion",
+            base: "com.google.android.gms:play-services-base:$playServicesVersion"
+    ]
+
+    //Unit Test
+    jUnitVersion = "4.12"
+    mockkVersion = "1.12.2"
+    androidxCoreTesting = "2.1.0"
+    coroutineTestVersion = "1.4.2"
+
+    testDependencies = [
+            junit: "junit:junit:$jUnitVersion",
+            mockk: "io.mockk:mockk:$mockkVersion",
+            core: "androidx.arch.core:core-testing:$androidxCoreTesting",
+            coroutinesTest: "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineTestVersion",
+    ]
+
+    //UI Test
+    espressoCoreVersion = "3.4.0"
+    androidTestJunitVersion = "1.1.3"
+
+    androidTestDependencies = [
+            espressoCore: "androidx.test.espresso:espresso-core:$espressoCoreVersion",
+            androidTestJunit: "androidx.test.ext:junit:$androidTestJunitVersion",
+    ]
+
+    retrofit_version = "2.6.3"
+    gsonVersion = "2.9.0"
+    okHttpVersion = "3.12.12"
+    okHttpInterceptorVersion = "3.12.12"
+
+    networkDependencies = [
+            retrofit: "com.squareup.retrofit2:retrofit:${retrofit_version}",
+            gson: "com.squareup.retrofit2:converter-gson:$gsonVersion",
+            interceptor: "com.squareup.okhttp3:logging-interceptor:$okHttpInterceptorVersion"
+    ]
+
+    okHttpSupport = "com.squareup.okhttp3:okhttp:$okHttpVersion"
+
+    coroutinesVersion= "1.4.0"
+    courotinesDependencies = [
+            "core": "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
+            "coroutinesAndroid": "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    ]
+
+    hiltVersion = "2.41"
+    hiltCompilerVersion = "1.0.0"
+    hiltDependencies = [
+            hilt: "com.google.dagger:hilt-android:$hiltVersion",
+            androidCompiler: "com.google.dagger:hilt-android-compiler:$hiltVersion",
+            compiler: "androidx.hilt:hilt-compiler:$hiltCompilerVersion"
+    ]
+
+    lifecycle_version = "2.4.1"
+
+    lifecycleDependencies = [
+            viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
+            liveData: "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    ]
+
+    multidexDependency = "androidx.multidex:multidex:2.0.1"
+}

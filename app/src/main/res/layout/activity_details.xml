@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <include
+            android:id="@+id/include2"
+            layout="@layout/toolbar_layout" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/detailsAvatarIv"
+            android:layout_width="@dimen/picture_size"
+            android:layout_height="@dimen/picture_size"
+            android:layout_marginTop="@dimen/verticalMargin"
+            android:layout_marginStart="@dimen/horizontalMargin"
+            android:layout_marginEnd="@dimen/horizontalMargin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include2" />
+
+        <TextView
+            android:id="@+id/detailAuthorNameTv"
+            style="@style/TextTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/verticalMargin"
+            android:layout_marginEnd="@dimen/horizontalMargin"
+            app:layout_constraintEnd_toEndOf="@+id/detailsAvatarIv"
+            app:layout_constraintStart_toStartOf="@+id/detailsAvatarIv"
+            app:layout_constraintTop_toBottomOf="@id/detailsAvatarIv"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/detailRepositoryNametv"
+            style="@style/TextTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/horizontalMargin"
+            app:layout_constraintEnd_toEndOf="@+id/detailsAvatarIv"
+            app:layout_constraintStart_toStartOf="@+id/detailsAvatarIv"
+            app:layout_constraintTop_toBottomOf="@+id/detailAuthorNameTv"
+            tools:text="@tools:sample/lorem" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/verticalMargin"
+            app:layout_constraintStart_toStartOf="@+id/detailRepositoryNametv"
+            app:layout_constraintTop_toBottomOf="@+id/detailRepositoryNametv"
+            app:srcCompat="@drawable/ic_baseline_star_24" />
+
+        <TextView
+            android:id="@+id/detailStarCountTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/verticalMargin"
+            android:layout_marginStart="@dimen/horizontalMargin"
+            app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView3"
+            app:layout_constraintStart_toEndOf="@+id/appCompatImageView3"
+            app:layout_constraintTop_toBottomOf="@+id/detailRepositoryNametv"
+            tools:text="500" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/detailForkIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/verticalMargin"
+            android:layout_marginStart="@dimen/horizontalMargin"
+            android:rotation="180"
+            app:layout_constraintStart_toEndOf="@+id/detailStarCountTv"
+            app:layout_constraintTop_toBottomOf="@+id/detailRepositoryNametv"
+            app:srcCompat="@drawable/ic_fork" />
+
+        <TextView
+            android:id="@+id/detailForkCountTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/verticalMargin"
+            android:layout_marginStart="@dimen/horizontalMargin"
+            app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView3"
+            app:layout_constraintStart_toEndOf="@+id/detailForkIv"
+            app:layout_constraintTop_toBottomOf="@+id/detailRepositoryNametv"
+            tools:text="500" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/detailGoToRepositoryTv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/buttonHeight"
+            android:layout_marginStart="@dimen/horizontalMargin"
+            android:layout_marginEnd="@dimen/horizontalMargin"
+            android:layout_marginTop="@dimen/verticalMargin"
+            android:layout_marginBottom="@dimen/verticalMargin"
+            android:text="Ir para Repositório"
+            app:cornerRadius="@dimen/cornerButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/detailStarCountTv"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

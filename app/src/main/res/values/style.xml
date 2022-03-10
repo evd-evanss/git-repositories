@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.RepositoriesGit" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/greyLight</item>
+        <item name="colorPrimaryVariant">@color/greyDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_grey</item>
+        <item name="colorSecondaryVariant">@color/blueGreyDark</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="SplashTheme" parent="Theme.RepositoriesGit">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
+    <!--  Text  -->
+    <style name="TextTheme" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="TextToolbar" parent="TextTheme">
+        <item name="android:textSize">@dimen/textExtraBig</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextTitle" parent="TextTheme">
+        <item name="android:textSize">@dimen/textBig</item>
+        <item name="android:textColor">@color/grayText</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextParagraph" parent="TextTheme">
+        <item name="android:textSize">@dimen/textMedium</item>
+        <item name="android:textColor">@color/grayText</item>
+    </style>
+
+    <style name="TextInputLayoutAppearanceOutLined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
+
+
+</resources>

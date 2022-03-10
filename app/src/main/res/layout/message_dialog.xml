@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/messageStatusV"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:background="@color/greyDark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/verticalMargin"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/messageTitleTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/horizontalMargin"
+            android:layout_marginEnd="@dimen/horizontalMargin"
+            android:layout_weight="1"
+            style="@style/TextTitle"
+            tools:text="Ops!" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/messageCloseIv"
+            app:srcCompat="@drawable/ic_close"
+            android:layout_marginEnd="@dimen/horizontalMargin"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/messageBodyTv"
+        style="@style/TextParagraph"
+        tools:text="Aconteceu um imprevisto"
+        android:layout_marginTop="@dimen/verticalMargin"
+        android:layout_marginStart="@dimen/horizontalMargin"
+        android:layout_marginEnd="@dimen/horizontalMargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/messageActionBt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/horizontalMargin"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_marginTop="@dimen/verticalMargin"
+        android:layout_marginEnd="@dimen/horizontalMargin"
+        android:layout_marginBottom="@dimen/verticalMargin"
+        tools:text="Tentar Novamente" />
+</LinearLayout>
