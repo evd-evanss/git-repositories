@@ -7,4 +7,5 @@
     <string name="action_try_again">Tentar Novamente</string>
     <string name="placeholder_author">"Autor: %s"</string>
     <string name="placeholder_repository">Repositório: %s</string>
+    <string name="action_got_to_repository">Ir para Repositório</string>
 </resources>

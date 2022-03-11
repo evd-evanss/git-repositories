@@ -9,7 +9,7 @@
     <View
         android:id="@+id/messageStatusV"
         android:layout_width="match_parent"
-        android:layout_height="16dp"
+        android:layout_height="@dimen/verticalMargin"
         android:background="@color/greyDark" />
 
     <LinearLayout
