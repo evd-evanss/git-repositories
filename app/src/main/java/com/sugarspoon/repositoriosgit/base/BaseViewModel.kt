@@ -10,5 +10,4 @@ abstract class BaseViewModel<Intent, State> : ViewModel() {
     val state: LiveData<State> = _state
 
     abstract fun handle(intent: Intent)
-
 }
