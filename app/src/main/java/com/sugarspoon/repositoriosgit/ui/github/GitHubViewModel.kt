@@ -49,8 +49,8 @@ class GitHubViewModel @Inject constructor(
             },
             onSuccess = {
                 dataLocal.clear()
-                dataLocal.addAll(it)
                 _state.value = GitHubState.UpdateData(it)
+                dataLocal.addAll(it)
             },
             onError = { error ->
                 _state.value = GitHubState.DisplayError(error.message.orEmpty())

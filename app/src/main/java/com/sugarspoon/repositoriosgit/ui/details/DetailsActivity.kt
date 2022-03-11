@@ -42,7 +42,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(
 
     private fun setupListener() = with(binding) {
         detailGoToRepositoryTv.setOnClickListener {
-            viewModel.handle(DetailsIntent.OnClickGoToRepository)
+            viewModel.handle(DetailsIntent.OnClickGoToRepository(repositoryEntity.url))
         }
     }
 
