@@ -99,7 +99,7 @@
             android:layout_marginEnd="@dimen/horizontalMargin"
             android:layout_marginTop="@dimen/verticalMargin"
             android:layout_marginBottom="@dimen/verticalMargin"
-            android:text="Ir para Repositório"
+            android:text="@string/action_got_to_repository"
             app:cornerRadius="@dimen/cornerButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

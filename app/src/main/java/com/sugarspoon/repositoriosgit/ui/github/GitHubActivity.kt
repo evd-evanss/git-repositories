@@ -6,13 +6,13 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sugarspoon.data.model.local.RepositoryEntity
 import com.sugarspoon.repositoriosgit.base.BaseActivity
-import com.sugarspoon.repositoriosgit.databinding.ActivitySearchBinding
+import com.sugarspoon.repositoriosgit.databinding.ActivityGithubBinding
 import com.sugarspoon.repositoriosgit.ui.details.DetailsActivity.Companion.onDetailsIntent
 import com.sugarspoon.repositoriosgit.views.MessageDialogFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GitHubActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding::inflate) {
+class GitHubActivity : BaseActivity<ActivityGithubBinding>(ActivityGithubBinding::inflate) {
 
     private val viewModel: GitHubViewModel by viewModels()
 
@@ -36,7 +36,7 @@ class GitHubActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
             linearLayoutManagerReverse.stackFromEnd = true
             setLayoutManager(linearLayoutManagerReverse)
             setAdapter(repositoriesAdapter)
-            addVeiledItems(10)
+            addVeiledItems(DEFAULT_SHIMMER)
         }
     }
 
@@ -98,5 +98,9 @@ class GitHubActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
 
     private fun updateCounter(count: Int) {
         counterSaved = count
+    }
+
+    companion object {
+        private const val DEFAULT_SHIMMER = 10
     }
 }
