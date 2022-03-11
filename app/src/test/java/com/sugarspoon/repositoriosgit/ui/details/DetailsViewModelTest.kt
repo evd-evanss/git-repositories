@@ -38,19 +38,25 @@ class DetailsViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `should show repository details when opening details screen`() = runBlockingTest {
+        //given
         val expectedData = mockk<RepositoryEntity>()
 
+        //when
         viewModel.handle(DetailsIntent.LoadData(expectedData))
 
+        //then
         state emittedOnce DetailsState.DisplayData(expectedData)
     }
 
     @Test
     fun `should redirect user to repository in browser`() = runBlockingTest {
+        //given
         val urlExpected = "www.google.com"
 
+        //when
         viewModel.handle(DetailsIntent.OnClickGoToRepository(urlExpected))
 
+        //then
         state emittedOnce DetailsState.OpenRepository(urlExpected)
     }
 

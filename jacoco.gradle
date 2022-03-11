@@ -1,0 +1,62 @@
+apply plugin: 'jacoco'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply from: "$rootDir/filter-jacoco.gradle"
+def debugTree = fileTree(dir: "${buildDir}/intermediates/javac", excludes: project.excludes, includes: project.includes)
+def mainSrcKt = "${project.projectDir}/src/main/kotlin"
+def mainSrcJava = "${project.projectDir}/src/main/java"
+def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes", excludes: project.excludes, includes: project.includes)
+
+task jacocoTestCoverageVerification(type: JacocoCoverageVerification) {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.7".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+project.afterEvaluate {
+    // Grab all build types and product flavors
+    def buildTypes = android.buildTypes.collect { type -> type.name }
+    buildTypes.each { buildTypeName ->
+        def sourceName
+        sourceName = "${buildTypeName}"
+        def unitTestsTaskName = "test${sourceName.capitalize()}UnitTest"
+        def taskJacocoCoverage = "${unitTestsTaskName}Coverage"
+        // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
+        task "${taskJacocoCoverage}"(type: JacocoReport, dependsOn: "$unitTestsTaskName") {
+            group = "Reporting"
+            description = "Generate Jacoco coverage reports on the ${sourceName.capitalize()} build."
+            classDirectories.from([debugTree], [kotlinDebugTree])
+            additionalSourceDirs.from(mainSrcKt, mainSrcJava)
+            sourceDirectories.from(mainSrcKt, mainSrcJava)
+            executionData.from(fileTree(dir: buildDir, includes: ['**/*.exec', '**/*.ec']))
+            reports {
+                xml.enabled = true
+                html.enabled = true
+                csv.enabled = true
+                html.destination = file("$rootDir/cover-reports/jacoco/$project.name")
+                xml.destination = file("$rootDir/cover-reports/jacoco/${project.name}/jacocoTestReport.xml")
+                csv.destination = file("$rootDir/cover-reports/jacoco/$project.name/jacocoTestReport.csv")
+            }
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { details ->
+            if ('org.jacoco' == details.requested.group) {
+                details.useVersion "0.8.7"
+            }
+        }
+    }
+}
