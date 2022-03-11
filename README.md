@@ -1,4 +1,4 @@
-# git-repositories ![Cobertura de Testes](.github/badges/jacoco.svg) 
+# git-repositories 
 
 ## Arquitetura
 Este aplicativo está separado em dois módulos:
