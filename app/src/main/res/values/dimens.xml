@@ -27,4 +27,6 @@
     <dimen name="picture_size">300dp</dimen>
     <dimen name="cornerButton">16dp</dimen>
     <dimen name="buttonHeight">65dp</dimen>
+    <dimen name="icon_avatar_small">50dp</dimen>
+    <dimen name="toolbar_height">80dp</dimen>
 </resources>
