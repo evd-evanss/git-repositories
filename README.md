@@ -1,4 +1,4 @@
-# git-repositories ![Cobertura de Testes](.github/badges/jacoco.svg) 
+# git-repositories 
 
 ## Arquitetura
 Este aplicativo está separado em dois módulos:
@@ -24,8 +24,3 @@ Glide -> Escolhido para lidar com carregamento de imagens
 SkyDovesAndroidVeil -> Escolhido para animação de shimmer 
 
 Jacoco -> Utilizado para gerar relatórios de cobertura de testes
-
-## Screenshot
-| Lista de Repositórios | Detalhes | Repositório |
-|:-----:|:-----:|:-----:|
-| ![image](./github_activity.png) | ![image](./images/details_activity.png) | ![image](./images/browser.png) |
