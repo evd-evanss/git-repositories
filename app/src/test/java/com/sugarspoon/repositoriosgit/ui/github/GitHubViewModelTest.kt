@@ -71,16 +71,15 @@ class GitHubViewModelTest : BaseViewModelTest() {
     @Test
     fun `should load repositories, update pageCount, display shimmer, hide shimmer when I open the app`() = runBlocking {
         //given
-        val pageCount = 1
+        viewModel.persistedData.clear()
+        val pageCount = 0
         val expected = fakeResponse
         coEvery { repository.getRepositories(pageCount) } returns flowOf(expected)
 
-        delay(1000)
         //when
-        viewModel.handle(GitHubIntent.LoadRepositories)
+        viewModel.handle(GitHubIntent.RefreshData)
 
         //then
-        state emittedOnce GitHubState.UpdateCounter(page = pageCount)
         state emittedOnce GitHubState.DisplayShimmer(isLoading = true)
         state emittedOnce GitHubState.UpdateData(expected)
         state emittedOnce GitHubState.DisplayShimmer(isLoading = false)

@@ -19,7 +19,6 @@ class GitHubViewModel @Inject constructor(
     override fun handle(intent: GitHubIntent) {
         when (intent) {
             is GitHubIntent.RefreshData -> handleInit()
-            is GitHubIntent.LoadRepositories -> handlePage()
             is GitHubIntent.OnScreenSwipeDown -> handlePage()
             is GitHubIntent.TryAgain -> getRepositories(intent.page)
             is GitHubIntent.OpenDetails -> handleOpenDetails(intent.repositoryEntity)

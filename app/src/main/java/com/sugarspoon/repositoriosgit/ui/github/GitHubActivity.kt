@@ -57,7 +57,7 @@ class GitHubActivity : BaseActivity<ActivityGithubBinding>(ActivityGithubBinding
         }
         gitHubRefreshSr.setOnRefreshListener {
             gitHubRefreshSr.isRefreshing = false
-            viewModel.handle(GitHubIntent.LoadRepositories)
+            viewModel.handle(GitHubIntent.OnScreenSwipeDown)
         }
     }
 
