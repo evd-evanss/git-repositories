@@ -14,11 +14,11 @@ class GitHubViewModel @Inject constructor(
 ) : BaseViewModel<GitHubIntent, GitHubState>() {
 
     private var pageCount = 0
-    internal var dataLocal = mutableListOf<RepositoryEntity>()
+    internal val persistedData = mutableListOf<RepositoryEntity>()
 
     override fun handle(intent: GitHubIntent) {
         when (intent) {
-            is GitHubIntent.InitData -> handleInit()
+            is GitHubIntent.RefreshData -> handleInit()
             is GitHubIntent.LoadRepositories -> handlePage()
             is GitHubIntent.OnScreenSwipeDown -> handlePage()
             is GitHubIntent.TryAgain -> getRepositories(intent.page)
@@ -27,15 +27,15 @@ class GitHubViewModel @Inject constructor(
     }
 
     private fun handleInit() {
-        if (dataLocal.isEmpty()) {
-            handlePage()
+        if (persistedData.isNotEmpty()) {
+            _state.value = GitHubState.UpdateData(persistedData)
         } else {
-            _state.value = GitHubState.UpdateData(dataLocal)
+            getRepositories(pageCount)
         }
     }
 
     private fun handlePage() {
-        pageCount += 1
+        pageCount += NEXT_PAGE
         _state.postValue(GitHubState.UpdateCounter(page = pageCount))
         getRepositories(pageCount)
     }
@@ -48,9 +48,9 @@ class GitHubViewModel @Inject constructor(
                 _state.value = GitHubState.DisplayShimmer(isLoading = it)
             },
             onSuccess = {
-                dataLocal.clear()
-                _state.value = GitHubState.UpdateData(it)
-                dataLocal.addAll(it)
+                persistedData.clear()
+                persistedData.addAll(it)
+                _state.value = GitHubState.UpdateData(persistedData)
             },
             onError = { error ->
                 _state.value = GitHubState.DisplayError(error.message.orEmpty())
@@ -64,5 +64,6 @@ class GitHubViewModel @Inject constructor(
 
     companion object {
         private const val ATTEMPTS = 1L
+        private const val NEXT_PAGE = 1
     }
 }

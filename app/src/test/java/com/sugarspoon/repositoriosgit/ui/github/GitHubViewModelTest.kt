@@ -9,7 +9,9 @@ import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -29,6 +31,17 @@ class GitHubViewModelTest : BaseViewModelTest() {
     @RelaxedMockK
     private lateinit var repository: RepositoryImpl
 
+    private val fakeResponse = listOf(
+        RepositoryEntity(
+            repositoryName = "repositorios_git",
+            forks = 2,
+            stars = 5,
+            avatar = "www.google.com/fake-png",
+            author = "Evandro Costa,",
+            url = "evd-evans/repositorio-git"
+        )
+    )
+
     @Before
     fun setup() {
         MockKAnnotations.init(this)
@@ -39,56 +52,30 @@ class GitHubViewModelTest : BaseViewModelTest() {
 
     @After
     fun tearDown() {
-        unmockkAll()
-    }
-
-    @Test
-    fun `should init data when open app first time`() = runBlockingTest {
-        val pageCount = 1
-        val expected = mockk<List<RepositoryEntity>>()
-        coEvery { repository.getRepositories(pageCount) } returns flowOf(expected)
-
-        viewModel.dataLocal.clear()
-        viewModel.handle(GitHubIntent.InitData)
-
-        state emittedOnce GitHubState.UpdateCounter(page = pageCount)
-        state emittedOnce GitHubState.DisplayShimmer(isLoading = true)
-        state emittedOnce GitHubState.UpdateData(expected)
-        state emittedOnce GitHubState.DisplayShimmer(isLoading = false)
+        clearAllMocks()
     }
 
     @Test
     fun `should persist screen state when app is rotated`() = runBlockingTest {
         //given
-        val pageCount = 1
-        val fakeDataPersisted = mutableListOf<RepositoryEntity>()
-        fakeDataPersisted.add(
-            RepositoryEntity(
-                repositoryName = "fakeRepo",
-                forks = 5,
-                stars = 5,
-                avatar = "fakeAvatar",
-                author = "fakeAuthor",
-                url = "fakeUrl"
-            )
-        )
-        coEvery { repository.getRepositories(pageCount) } returns flowOf(fakeDataPersisted)
+        viewModel.persistedData.addAll(fakeResponse)
+        val dataPersistedExpected = viewModel.persistedData
 
         //when
-        viewModel.dataLocal.addAll(fakeDataPersisted)
-        viewModel.handle(GitHubIntent.InitData)
+        viewModel.handle(GitHubIntent.RefreshData)
 
         //then
-        state emittedOnce GitHubState.UpdateData(fakeDataPersisted)
+        state emittedOnce GitHubState.UpdateData(dataPersistedExpected)
     }
 
     @Test
-    fun `should load repositories, update pageCount, display shimmer, hide shimmer when I open the app`() = runBlockingTest {
+    fun `should load repositories, update pageCount, display shimmer, hide shimmer when I open the app`() = runBlocking {
         //given
         val pageCount = 1
-        val expected = mockk<List<RepositoryEntity>>()
+        val expected = fakeResponse
         coEvery { repository.getRepositories(pageCount) } returns flowOf(expected)
 
+        delay(1000)
         //when
         viewModel.handle(GitHubIntent.LoadRepositories)
 
@@ -100,10 +87,10 @@ class GitHubViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `should load repositories, when I swipe down the screen`() = runBlockingTest {
+    fun `should load repositories, when I swipe down the screen`() = runBlocking {
         //given
         val pageCount = 1
-        val expected = mockk<List<RepositoryEntity>>()
+        val expected = fakeResponse
         coEvery { repository.getRepositories(pageCount) } returns flowOf(expected)
 
         //when
@@ -120,7 +107,7 @@ class GitHubViewModelTest : BaseViewModelTest() {
     fun `should load repositories when click in try again button`() = runBlockingTest {
         //given
         val counterSaved = 5
-        val expected = mockk<List<RepositoryEntity>>()
+        val expected = fakeResponse
         coEvery { repository.getRepositories(counterSaved) } returns flowOf(expected)
 
         //when

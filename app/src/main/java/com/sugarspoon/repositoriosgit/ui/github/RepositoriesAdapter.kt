@@ -1,15 +1,11 @@
 package com.sugarspoon.repositoriosgit.ui.github
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.sugarspoon.data.model.local.RepositoryEntity
 import com.sugarspoon.repositoriosgit.databinding.ItemRepositoryBinding
 import com.sugarspoon.repositoriosgit.utils.loadPicture
@@ -18,15 +14,7 @@ class RepositoriesAdapter(private val context: Context): RecyclerView.Adapter<Re
 
     var itemClicked: (RepositoryEntity) -> Unit = {}
 
-    var list : MutableList<RepositoryEntity> = mutableListOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    fun updateList(data: List<RepositoryEntity>) {
-        list.addAll(data)
-    }
+    private val list: MutableList<RepositoryEntity> = mutableListOf()
 
     override fun getItemCount() = list.size
 
@@ -47,5 +35,35 @@ class RepositoriesAdapter(private val context: Context): RecyclerView.Adapter<Re
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as EventViewHolder).bind(list[position])
+    }
+
+    fun updateData(data: List<RepositoryEntity>) {
+        val diffCallback = RepositoryEntityDiffCallback(this.list, data)
+        val diffUtilResult = DiffUtil.calculateDiff(diffCallback)
+        this.list.clear()
+        this.list.addAll(data)
+        diffUtilResult.dispatchUpdatesTo(this@RepositoriesAdapter)
+    }
+
+    inner class RepositoryEntityDiffCallback(
+        private var oldData: List<RepositoryEntity>,
+        private var newData: List<RepositoryEntity>
+    ) : DiffUtil.Callback() {
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return list[oldItemPosition].repositoryName == newData[oldItemPosition].repositoryName
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldData[oldItemPosition].repositoryName == newData[newItemPosition].repositoryName
+        }
+
+        override fun getOldListSize() = oldData.size
+
+        override fun getNewListSize() = newData.size
+
+        override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+            return super.getChangePayload(oldItemPosition, newItemPosition)
+        }
     }
 }

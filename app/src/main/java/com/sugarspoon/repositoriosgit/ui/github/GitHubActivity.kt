@@ -26,7 +26,7 @@ class GitHubActivity : BaseActivity<ActivityGithubBinding>(ActivityGithubBinding
         setupUi()
         setupStates()
         setupListeners()
-        viewModel.handle(GitHubIntent.InitData)
+        viewModel.handle(GitHubIntent.RefreshData)
     }
 
     private fun setupUi() = with(binding) {
@@ -62,7 +62,7 @@ class GitHubActivity : BaseActivity<ActivityGithubBinding>(ActivityGithubBinding
     }
 
     private fun updateData(data: List<RepositoryEntity>) {
-        repositoriesAdapter.updateList(data)
+        repositoriesAdapter.updateData(data)
     }
 
     private fun displayShimmer(isLoading: Boolean) = with(binding) {
