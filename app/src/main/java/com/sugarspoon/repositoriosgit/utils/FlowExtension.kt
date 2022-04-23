@@ -13,22 +13,22 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.lang.Exception
 
-fun <T> Flow<T>.onCollect(
-    onSuccess:(suspend (t: T) -> Unit)? = null,
-    onError: ((e: Throwable) -> Unit)? = null,
-    onLoading: ((isLoading: Boolean) -> Unit)? = null,
+fun <T> Flow<T>.onResults(
+    Success:(suspend (t: T) -> Unit)? = null,
+    Error: ((e: Throwable) -> Unit)? = null,
+    Loading: ((isLoading: Boolean) -> Unit)? = null,
     coroutineScope: CoroutineScope = CoroutineScope(IO)
 ) {
     coroutineScope.launch {
         withContext(Main) {
-            onLoading?.invoke(true)
+            Loading?.invoke(true)
         }
         try {
             collect { result ->
-                onSuccess?.let {
+                Success?.let {
                     withContext(Main) {
                         it(result)
-                        onLoading?.invoke(false)
+                        Loading?.invoke(false)
                     }
                 }
             }
@@ -38,14 +38,14 @@ fun <T> Flow<T>.onCollect(
                     val json = e.response()?.errorBody()?.string()
                     try {
                         val message = Gson().fromJson(json, ErrorResponse::class.java)
-                        onError?.invoke(RetrofitException.create(message.message, e, RetrofitException.Type.HTTP))
+                        Error?.invoke(RetrofitException.create(message.message, e, RetrofitException.Type.HTTP))
                     } catch (e: Exception) {
-                        onError?.invoke(e)
+                        Error?.invoke(e)
                     }
                 } else {
-                    onError?.invoke(e)
+                    Error?.invoke(e)
                 }
-                onLoading?.invoke(false)
+                Loading?.invoke(false)
             }
         }
     }

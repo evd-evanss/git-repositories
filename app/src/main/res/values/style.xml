@@ -43,5 +43,9 @@
 
     <style name="TextInputLayoutAppearanceOutLined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
 
+    <style name="DialogLoading.Animation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_fade_out</item>
+    </style>
 
 </resources>

@@ -3,13 +3,17 @@ package com.sugarspoon.repositoriosgit.ui.github
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sugarspoon.data.model.local.RepositoryEntity
 import com.sugarspoon.repositoriosgit.base.BaseActivity
 import com.sugarspoon.repositoriosgit.databinding.ActivityGithubBinding
 import com.sugarspoon.repositoriosgit.ui.details.DetailsActivity.Companion.onDetailsIntent
+import com.sugarspoon.repositoriosgit.views.DialogLoading
 import com.sugarspoon.repositoriosgit.views.MessageDialogFactory
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 
 @AndroidEntryPoint
 class GitHubActivity : BaseActivity<ActivityGithubBinding>(ActivityGithubBinding::inflate) {
@@ -19,6 +23,10 @@ class GitHubActivity : BaseActivity<ActivityGithubBinding>(ActivityGithubBinding
     lateinit var repositoriesAdapter: RepositoriesAdapter
 
     private var counterSaved = 0
+
+    private val loadingDialog by lazy {
+        DialogLoading(false)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,19 +74,21 @@ class GitHubActivity : BaseActivity<ActivityGithubBinding>(ActivityGithubBinding
     }
 
     private fun displayShimmer(isLoading: Boolean) = with(binding) {
-        if (isLoading) {
-            gitHubListRv.veil()
-        } else {
-            gitHubListRv.unVeil()
-        }
+        loadingDialog.displayLoading(isLoading, supportFragmentManager)
+//        if (isLoading) {
+//            gitHubListRv.veil()
+//        } else {
+//            gitHubListRv.unVeil()
+//        }
     }
 
     private fun displayLoading(isLoading: Boolean) = with(binding) {
-        if (isLoading) {
-            gitHubLoadingPb.visibility = View.VISIBLE
-        } else {
-            gitHubLoadingPb.visibility = View.GONE
-        }
+        loadingDialog.displayLoading(isLoading, supportFragmentManager)
+//        if (isLoading) {
+//            gitHubLoadingPb.visibility = View.VISIBLE
+//        } else {
+//            gitHubLoadingPb.visibility = View.GONE
+//        }
     }
 
     private fun displayError(error: String) =

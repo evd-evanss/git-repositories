@@ -2,16 +2,20 @@ package com.sugarspoon.repositoriosgit.ui.github
 
 import androidx.lifecycle.Observer
 import com.sugarspoon.data.model.local.RepositoryEntity
+import com.sugarspoon.data.model.remote.response.Items
+import com.sugarspoon.data.model.remote.response.RepositoriesResponse
+import com.sugarspoon.data.repositories.Repository
 import com.sugarspoon.data.repositories.RepositoryImpl
+import com.sugarspoon.data.sources.GitHubDataSource
 import com.sugarspoon.repositoriosgit.base.BaseViewModelTest
 import com.sugarspoon.repositoriosgit.base.emittedOnce
+import com.sugarspoon.repositoriosgit.rules.Event
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.mockk.impl.annotations.RelaxedMockK
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -31,6 +35,11 @@ class GitHubViewModelTest : BaseViewModelTest() {
     @RelaxedMockK
     private lateinit var repository: RepositoryImpl
 
+    @RelaxedMockK
+    private lateinit var dataSource: GitHubDataSource
+
+    lateinit var repo: Repository
+
     private val fakeResponse = listOf(
         RepositoryEntity(
             repositoryName = "repositorios_git",
@@ -45,6 +54,7 @@ class GitHubViewModelTest : BaseViewModelTest() {
     @Before
     fun setup() {
         MockKAnnotations.init(this)
+        repo = spyk(RepositoryImpl(dataSource))
         viewModel = GitHubViewModel(repository)
         state = spyk<Observer<GitHubState>>()
         viewModel.state.observeForever(state)
@@ -119,6 +129,31 @@ class GitHubViewModelTest : BaseViewModelTest() {
     }
 
     @Test
+    fun `should show error on`() = runBlockingTest {
+        //given
+        val counterSaved = 5
+        val repositoryExpected = mockk<RepositoriesResponse>(relaxed = true)
+        coEvery { dataSource.getRepositories(1) } returns flow {
+            throw Throwable("Erro")
+        }
+
+        repo.getRepositories(1).test {
+            expectError()
+        }
+        val repo = RepositoryFake()
+        //coEvery { repo.getRepositories(counterSaved) } returns expected
+
+//        repo.getRepositories(1).test {
+//            //assert(expectItem() == listOf(repositoryExpected))
+//            expectError()
+//        }
+        //when
+
+        //then
+        //state emittedOnce GitHubState.DisplayError(expected.message.orEmpty())
+    }
+
+    @Test
     fun `should open details when click in item repository`() {
         //given
         val repositoryEntity = mockk<RepositoryEntity>()
@@ -128,5 +163,20 @@ class GitHubViewModelTest : BaseViewModelTest() {
 
         //then
         state emittedOnce GitHubState.OpenDetails(repositoryEntity)
+    }
+
+    class RepositoryFake() : Repository {
+
+        override fun getRepositories(page: Int) = flow {
+            //throw Throwable("Erro")
+            emit(listOf(RepositoryEntity(
+                "",
+                2,
+                2,
+                ",",
+                "",
+                ""
+            )))
+        }
     }
 }

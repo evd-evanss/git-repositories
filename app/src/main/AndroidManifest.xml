@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RepositoriesGit">
+
         <activity
             android:name=".ui.github.GitHubActivity"
             android:exported="true">
@@ -20,6 +21,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+
         </activity>
 
         <activity android:name=".ui.details.DetailsActivity" android:exported="false"/>

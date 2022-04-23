@@ -17,4 +17,5 @@
     <color name="successColor">#97F49A</color>
     <color name="blue_grey">#546e7a</color>
     <color name="blueGreyDark">#29434e</color>
+    <color name="overlay">#85000000</color>
 </resources>

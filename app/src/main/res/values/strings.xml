@@ -1,4 +1,8 @@
 <resources>
+
+    <string name="long_shortcut">QA Mode</string>
+    <string name="short_shortcut">QA</string>
+
     <string name="app_name">Repositorios Git</string>
     <string name="repositories_hint">Melhores Repositórios</string>
     <string name="action_close">Fechar</string>

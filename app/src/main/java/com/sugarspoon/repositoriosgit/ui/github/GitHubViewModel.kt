@@ -3,8 +3,9 @@ package com.sugarspoon.repositoriosgit.ui.github
 import com.sugarspoon.data.model.local.RepositoryEntity
 import com.sugarspoon.data.repositories.Repository
 import com.sugarspoon.repositoriosgit.base.BaseViewModel
-import com.sugarspoon.repositoriosgit.utils.onCollect
+import com.sugarspoon.repositoriosgit.utils.onResults
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.retry
 import javax.inject.Inject
 
@@ -39,22 +40,25 @@ class GitHubViewModel @Inject constructor(
         getRepositories(pageCount)
     }
 
-    private fun getRepositories(page: Int) {
+    internal fun getRepositories(page: Int) {
         repository.getRepositories(page)
             .retry(ATTEMPTS)
-            .onCollect(
-            onLoading = {
-                _state.value = GitHubState.DisplayShimmer(isLoading = it)
-            },
-            onSuccess = {
-                persistedData.clear()
-                persistedData.addAll(it)
-                _state.value = GitHubState.UpdateData(persistedData)
-            },
-            onError = { error ->
+            .catch { error ->
                 _state.value = GitHubState.DisplayError(error.message.orEmpty())
             }
-        )
+            .onResults(
+                Loading = { isLoading ->
+                    _state.value = GitHubState.DisplayShimmer(isLoading = isLoading)
+                },
+                Success = {
+                    persistedData.clear()
+                    persistedData.addAll(it)
+                    _state.value = GitHubState.UpdateData(persistedData)
+                },
+                Error = { error ->
+                    _state.value = GitHubState.DisplayError(error.message.orEmpty())
+                }
+            )
     }
 
     private fun handleOpenDetails(repositoryEntity: RepositoryEntity) {
