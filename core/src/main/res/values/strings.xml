@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Repositorios Git</string>
+    <string name="repositories_hint">Melhores Repositórios</string>
+    <string name="action_close">Fechar</string>
+    <string name="ops">Ops!</string>
+    <string name="default_error">Todo mundo erra e dessa vez foram os nossos servidores 😰</string>
+    <string name="action_try_again">Tentar Novamente</string>
+    <string name="action_got_to_repository">Ir para Repositório</string>
+</resources>

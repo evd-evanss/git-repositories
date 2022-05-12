@@ -14,4 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Repositorios Git"
 include ':app'
-include ':data'
+include ':network'
+include ':github'
+include ':core'

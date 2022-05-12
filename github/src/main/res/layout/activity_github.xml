@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sugarspoon.github.ui.git.GitHubActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/gitHubRefreshSr"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
+
+        <com.skydoves.androidveil.VeilRecyclerFrameView
+            android:id="@+id/gitHubListRv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/include"
+            app:veilFrame_baseAlpha="0.6"
+            app:veilFrame_baseColor="@color/greyLight"
+            app:veilFrame_highlightAlpha="1.0"
+            app:veilFrame_highlightColor="@color/greyDark"
+            app:veilFrame_layout="@layout/item_repository"
+            app:veilFrame_radius="@dimen/veil_frame_radius"
+            app:veilFrame_shimmerEnable="true"
+            app:veilFrame_veiled="false" />
+
+        <ProgressBar
+            android:id="@+id/gitHubLoadingPb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gitHubListRv"
+            app:layout_constraintTop_toBottomOf="@id/include" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
