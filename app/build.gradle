@@ -55,7 +55,23 @@ android {
 }
 
 dependencies {
+    /*
+      app -> core
+          -> github
+          -> network
 
+      github
+          -> core
+          -> network
+
+      core
+      network
+    */
+
+    //core
+    //github -> core -> network
+
+    //network
 
     implementation project(':network')
     implementation project(":github")

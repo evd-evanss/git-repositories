@@ -29,18 +29,12 @@ object RetrofitModule {
     }
 
     @Provides
-    fun providesClient(@ApplicationContext context: Context, chuckerInterceptor: ChuckerInterceptor) = OkHttpClient.Builder()
+    fun providesClient(chuckerInterceptor: ChuckerInterceptor) = OkHttpClient.Builder()
         .addInterceptor(getHttpInterceptor())
         .addInterceptor(chuckerInterceptor)
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
         .build()
-
-    @Provides
-    fun providesRetrofitFactory(
-        retrofit: Retrofit.Builder,
-        client: OkHttpClient
-    ) = ServiceFactory(retrofit, client)
 
     @Provides
     fun providesChuck(@ApplicationContext context: Context) =
@@ -61,5 +55,11 @@ object RetrofitModule {
 
     fun getHttpInterceptor() = HttpLoggingInterceptor()
         .setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    @Provides
+    fun providesRetrofitFactory(
+        retrofit: Retrofit.Builder,
+        client: OkHttpClient
+    ) = ServiceFactory(retrofit, client)
 
 }
